@@ -10,10 +10,10 @@
 		5EA7059B1F331611007ECA3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA7059A1F331611007ECA3F /* AppDelegate.swift */; };
 		5EA7059D1F331611007ECA3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA7059C1F331611007ECA3F /* ViewController.swift */; };
 		5EA705A01F331611007ECA3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EA7059E1F331611007ECA3F /* Main.storyboard */; };
-		5EA705A21F331611007ECA3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA705A11F331611007ECA3F /* Assets.xcassets */; };
 		5EA705A51F331611007ECA3F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5EA705A31F331611007ECA3F /* LaunchScreen.storyboard */; };
 		5EA705B01F331611007ECA3F /* PokedexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA705AF1F331611007ECA3F /* PokedexTests.swift */; };
 		5EA705BB1F331611007ECA3F /* PokedexUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA705BA1F331611007ECA3F /* PokedexUITests.swift */; };
+		5EA705CC1F331AE5007ECA3F /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EA705CB1F331AE5007ECA3F /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +35,9 @@
 
 /* Begin PBXFileReference section */
 		5EA705971F331611007ECA3F /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EA7059A1F331611007ECA3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5EA7059C1F331611007ECA3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5EA7059A1F331611007ECA3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Sources/AppDelegate.swift; sourceTree = "<group>"; };
+		5EA7059C1F331611007ECA3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Sources/ViewController.swift; sourceTree = "<group>"; };
 		5EA7059F1F331611007ECA3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5EA705A11F331611007ECA3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5EA705A41F331611007ECA3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5EA705A61F331611007ECA3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EA705AB1F331611007ECA3F /* PokedexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokedexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +46,7 @@
 		5EA705B61F331611007ECA3F /* PokedexUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PokedexUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EA705BA1F331611007ECA3F /* PokedexUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexUITests.swift; sourceTree = "<group>"; };
 		5EA705BC1F331611007ECA3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5EA705CB1F331AE5007ECA3F /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = Resources/Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,12 +97,9 @@
 		5EA705991F331611007ECA3F /* Pokedex */ = {
 			isa = PBXGroup;
 			children = (
-				5EA7059A1F331611007ECA3F /* AppDelegate.swift */,
-				5EA7059C1F331611007ECA3F /* ViewController.swift */,
-				5EA7059E1F331611007ECA3F /* Main.storyboard */,
-				5EA705A11F331611007ECA3F /* Assets.xcassets */,
-				5EA705A31F331611007ECA3F /* LaunchScreen.storyboard */,
-				5EA705A61F331611007ECA3F /* Info.plist */,
+				5EA705CA1F331998007ECA3F /* Sources */,
+				5EA705C91F331988007ECA3F /* Resources */,
+				5EA705C81F331913007ECA3F /* Support */,
 			);
 			path = Pokedex;
 			sourceTree = "<group>";
@@ -123,6 +120,33 @@
 				5EA705BC1F331611007ECA3F /* Info.plist */,
 			);
 			path = PokedexUITests;
+			sourceTree = "<group>";
+		};
+		5EA705C81F331913007ECA3F /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				5EA705A61F331611007ECA3F /* Info.plist */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		5EA705C91F331988007ECA3F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5EA705CB1F331AE5007ECA3F /* Media.xcassets */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5EA705CA1F331998007ECA3F /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5EA7059A1F331611007ECA3F /* AppDelegate.swift */,
+				5EA7059C1F331611007ECA3F /* ViewController.swift */,
+				5EA7059E1F331611007ECA3F /* Main.storyboard */,
+				5EA705A31F331611007ECA3F /* LaunchScreen.storyboard */,
+			);
+			name = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +217,7 @@
 				TargetAttributes = {
 					5EA705961F331611007ECA3F = {
 						CreatedOnToolsVersion = 8.3.3;
+						DevelopmentTeam = 5LPM6VKUB5;
 						ProvisioningStyle = Automatic;
 					};
 					5EA705AA1F331611007ECA3F = {
@@ -233,7 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5EA705A51F331611007ECA3F /* LaunchScreen.storyboard in Resources */,
-				5EA705A21F331611007ECA3F /* Assets.xcassets in Resources */,
+				5EA705CC1F331AE5007ECA3F /* Media.xcassets in Resources */,
 				5EA705A01F331611007ECA3F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +327,7 @@
 				5EA7059F1F331611007ECA3F /* Base */,
 			);
 			name = Main.storyboard;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		5EA705A31F331611007ECA3F /* LaunchScreen.storyboard */ = {
@@ -310,6 +336,7 @@
 				5EA705A41F331611007ECA3F /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -412,6 +439,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5LPM6VKUB5;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.alexisschultz.Pokedex;
@@ -424,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5LPM6VKUB5;
 				INFOPLIST_FILE = Pokedex/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = fr.alexisschultz.Pokedex;
