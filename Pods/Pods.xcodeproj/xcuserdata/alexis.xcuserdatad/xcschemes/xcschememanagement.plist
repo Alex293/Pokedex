@@ -34,13 +34,69 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwifterSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Whisper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
-	<dict/>
+	<dict>
+		<key>2E5CF3F59E45733AD5B9BDE9251FDCF1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>35167919A1AEFD84331C950E395A9EA2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>59EB218506BA623F49284915B832D4D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7D2EA45B14307792A70654213FE30D4F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>919709553444474A54BFE82442AC42DE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9B1D1C6920728642BE8923F5DC226991</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CECBB9C8624DD0F8C83E208F22287276</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F072CC8B1BC9FF86D5D6CF43521C15EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F936B31B26EB8BAB14C5001E3E45FED8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
 </dict>
 </plist>

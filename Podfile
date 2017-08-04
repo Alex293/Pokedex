@@ -10,6 +10,8 @@ target 'Pokedex' do
   pod 'Siesta/UI', '~> 1.0'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
+  pod 'Whisper'
+  pod 'SwifterSwift'
   
   target 'PokedexTests' do
     inherit! :search_paths

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonImageCell" rowHeight="200" id="9cD-jZ-hIg" customClass="PokemonImageCell" customModule="Pokedex" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="9cD-jZ-hIg" id="v7Q-Fq-ohF">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRF-fl-hKB" customClass="RemoteImageView" customModule="Siesta">
+                        <rect key="frame" x="8" y="-8.5" width="359" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="DLT-F1-cjr"/>
+                        </constraints>
+                        <connections>
+                            <outlet property="loadingView" destination="OIn-Zn-mRx" id="jrC-4Y-WAD"/>
+                        </connections>
+                    </imageView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="OIn-Zn-mRx">
+                        <rect key="frame" x="162" y="-25" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="OIn-Zn-mRx" secondAttribute="height" multiplier="1:1" id="hRB-ZK-eiG"/>
+                            <constraint firstAttribute="height" constant="50" id="ld3-Gv-htu"/>
+                        </constraints>
+                    </activityIndicatorView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="fRF-fl-hKB" firstAttribute="top" secondItem="v7Q-Fq-ohF" secondAttribute="topMargin" id="GTM-6c-20B"/>
+                    <constraint firstItem="OIn-Zn-mRx" firstAttribute="centerY" secondItem="v7Q-Fq-ohF" secondAttribute="centerY" id="SUC-lR-bYN"/>
+                    <constraint firstItem="fRF-fl-hKB" firstAttribute="leading" secondItem="v7Q-Fq-ohF" secondAttribute="leadingMargin" id="Wn9-hs-zmP"/>
+                    <constraint firstItem="fRF-fl-hKB" firstAttribute="bottom" secondItem="v7Q-Fq-ohF" secondAttribute="bottomMargin" id="lQh-ra-bEc"/>
+                    <constraint firstItem="OIn-Zn-mRx" firstAttribute="centerX" secondItem="v7Q-Fq-ohF" secondAttribute="centerX" id="qyZ-Tp-xS0"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="fRF-fl-hKB" secondAttribute="trailing" id="vEE-lP-Fwj"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="pokemonImageView" destination="fRF-fl-hKB" id="ZYx-G0-Igv"/>
+            </connections>
+            <point key="canvasLocation" x="30.5" y="-289"/>
+        </tableViewCell>
+    </objects>
+</document>
