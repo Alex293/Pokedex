@@ -10,10 +10,10 @@ import RealmSwift
 
 final class DatabaseProvider
 {
-    private static let shouldDeleteRealm = true
+    private static let shouldDeleteRealm = false
     private let realm = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true))
 
-    // Can't init is singleton
+    // Can't init this is a singleton
     private init()
     {
         guard DatabaseProvider.shouldDeleteRealm else { return }
@@ -41,51 +41,20 @@ final class DatabaseProvider
     }
 
     @discardableResult
-    func insertPokemon(withId id : Int, name : String) throws -> Pokemon
+    func insert(_ pokemon : Pokemon) throws -> Pokemon
     {
-        let pokemon = Pokemon()
         try realm.write
         {
-            pokemon.id = id
-            pokemon.name = name
             realm.add(pokemon, update: true)
         }
         return pokemon
     }
 
-    func savePokemon(withId id : Int, name : String) throws -> Pokemon
-    {
-        let pokemon = Pokemon()
-        try realm.write
-        {
-            pokemon.id = id
-            pokemon.name = name
-            realm.add(pokemon, update: true)
-        }
-        return pokemon
-    }
-
-    /*@discardableResult
-    func updateTaskList(_ taskList : TaskList, withTitle title : String) throws -> TaskList
-    {
-        try realm.write
-        {
-            taskList.title = title
-            taskList.updatedAt = Date()
-        }
-        return taskList
-    }*/
-
-    func deletePokemon(_ pokemon : Pokemon) throws
+    func delete(_ pokemon : Pokemon) throws
     {
         try realm.write
         {
             realm.delete(pokemon)
         }
-    }
-
-    func isInitialLoadComplete() -> Bool
-    {
-        return realm.objects(Pokemon.self).count > 50
     }
 }

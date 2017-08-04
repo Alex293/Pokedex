@@ -23,7 +23,18 @@ class SavedPokemonsListPresenter: SavedPokemonsListPresenterProtocol, SavedPokem
         self.router = router
     }
 
-    func getSavedPokemons() -> Results<Pokemon>? {
+    func getSavedPokemons() -> Results<Pokemon>?
+    {
         return interactor?.getSavedPokemons()  // todo change that
+    }
+
+    func performUnsave(_ pokemon: Pokemon)
+    {
+        interactor?.unsave(pokemon)
+    }
+
+    func didSelect(_ pokemon : Pokemon)
+    {
+        router.routeToPokemonDetails(for: pokemon)
     }
 }

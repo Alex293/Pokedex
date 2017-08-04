@@ -9,7 +9,7 @@
 //
 
 import UIKit
-import Siesta
+import Whisper
 
 class PokemonDetailsViewController: UIViewController, PokemonDetailsViewProtocol
 {
@@ -41,9 +41,10 @@ class PokemonDetailsViewController: UIViewController, PokemonDetailsViewProtocol
         super.viewDidLoad()
         title = "Loading pokemon details"
         navigationItem.rightBarButtonItem = saveButton
+        presenter?.viewDidLoad()
     }
 
-    func update(pokemon : Pokemon)
+    func update(_ pokemon : Pokemon)
     {
         self.pokemon = pokemon
         saveButton.isEnabled = true
@@ -58,7 +59,16 @@ class PokemonDetailsViewController: UIViewController, PokemonDetailsViewProtocol
 
     @objc func didTouchSaveButton()
     {
-        print("Save")
+        guard let pokemon = pokemon else { return }
+        presenter?.performSave(pokemon)
+    }
+
+    func show(_ message : String, isError : Bool)
+    {
+        var murmur = Murmur(title: message)
+        murmur.backgroundColor = isError ? .red : .white
+        murmur.titleColor = isError ? .white : .black
+        Whisper.show(whistle: murmur, action: .show(2))
     }
 }
 
@@ -85,7 +95,12 @@ extension PokemonDetailsViewController : UITableViewDataSource
         {
         case 0:
             let cell = pokemonDetailsTableView.dequeueReusableCell(withIdentifier: "PokemonImageCell") as? PokemonImageCell
-            cell?.imageUrl = pokemon?.imageUrl
+            guard let pokemon = pokemon else { return cell! }
+            presenter?.getImage(for: pokemon, successCallBack:
+            {
+                (image) in
+                cell?.imageView?.image = image
+            })
             return cell!
         case 1:
             let cell = pokemonDetailsTableView.dequeueReusableCell(withClass: PokemonTypeCell.self)

@@ -12,7 +12,6 @@ import UIKit
 
 class SavedPokemonsListRouter: SavedPokemonsListWireframeProtocol
 {
-
     weak var viewController: UIViewController?
 
     static func loadModule() -> UIViewController
@@ -30,5 +29,10 @@ class SavedPokemonsListRouter: SavedPokemonsListWireframeProtocol
         let savedPokemonListTabBarItem = UITabBarItem(title: "Saved Pokemons", image: UIImage(named: "heartLight"), selectedImage: UIImage(named: "heartBold"))
         view.tabBarItem = savedPokemonListTabBarItem
         return view
+    }
+
+    func routeToPokemonDetails(for pokemon : Pokemon)
+    {
+        viewController?.navigationController?.pushViewController(PokemonDetailsRouter.loadModule(for : pokemon), animated: true)
     }
 }

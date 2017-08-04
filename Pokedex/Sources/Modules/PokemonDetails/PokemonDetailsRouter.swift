@@ -29,4 +29,21 @@ class PokemonDetailsRouter: PokemonDetailsWireframeProtocol
 
         return view
     }
+
+    static func loadModule(for pokemon : Pokemon) -> UIViewController
+    {
+        let view = PokemonDetailsViewController(nibName: nil, bundle: nil)
+        let interactor = PokemonDetailsInteractor()
+        let router = PokemonDetailsRouter()
+        let presenter = PokemonDetailsPresenter(interface: view, interactor: interactor, router: router)
+
+        view.presenter = presenter
+        interactor.presenter = presenter
+        router.viewController = view
+
+        presenter.pokemon = pokemon
+        presenter.wasLoadedWithPokemon = true
+        
+        return view
+    }
 }

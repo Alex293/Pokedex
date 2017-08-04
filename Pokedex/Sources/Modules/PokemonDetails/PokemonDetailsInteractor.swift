@@ -10,46 +10,63 @@
 
 import UIKit
 
+enum PokemonDetailsError : Error
+{
+    case noUrl
+    case noContent
+}
+
 class PokemonDetailsInteractor: PokemonDetailsInteractorInputProtocol
 {
     weak var presenter: PokemonDetailsInteractorOutputProtocol?
 
-    func loadPokemonDetails(from url: String)
+    func loadPokemon(from url : String, successCallBack : PokemonLoadingSuccessCallback?, failureCallback : PokemonLoadingFailureCallback?)
     {
         pokeAPI.resource(for: url).addObserver(owner: self)
         {
-            [weak self] (resource, event) in
+            (resource, event) in
             switch event
             {
             case .newData(_) :
                 let result : PokemonDetails = resource.typedContent(ifNone: (id : 0, name : "Default name", imageUrl : "None", stats : [],  types: []))
-                self?.presenter?.didLoad(pokemon: Pokemon(details : result))
+                successCallBack?(Pokemon(details: result))
             case .error :
                 guard let error = resource.latestError else { return }
-                print(error)
+                failureCallback?(error)
             default : break
             }
         }.load()
     }
-
-    func loadPokemonImage(from url : String, successCallBack : @escaping (_ image : UIImage) -> Void)
+    
+    func loadLocalImage(for pokemon : Pokemon) -> UIImage?
     {
-        pokeAPI.resource(for: url).request(.get)
+        return FileManager.shared.getLocalImage(for: pokemon)
+    }
+
+    func loadDistantImage(for pokemon : Pokemon, successCallBack : PokemonImageLoadingSuccessCallback?, failureCallback : PokemonImageLoadingFailureCallback?)
+    {
+        guard let imageUrl = pokemon.imageUrl else { failureCallback?(PokemonDetailsError.noUrl) ; return }
+        pokeAPI.resource(for: imageUrl).request(.get)
         .onSuccess(
         {
             (entity) in
             guard let image : UIImage = entity.typedContent(ifNone: nil) else
             {
+                failureCallback?(PokemonDetailsError.noContent)
                 return
             }
-            successCallBack(image)
+            successCallBack?(image)
         })
         .onFailure
         {
             (error) in
-            print("Failed to load pokemon image")
-            //self?.presenter?.didFailedToLoadData(error: error, isInitialLoad: false)
+            failureCallback?(error)
         }
+    }
+
+    func save(_ pokemon: Pokemon)
+    {
+        _ = try? DatabaseProvider.shared.insert(pokemon)
     }
 }
 

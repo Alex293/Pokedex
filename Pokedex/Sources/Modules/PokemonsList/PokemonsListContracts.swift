@@ -43,7 +43,6 @@ protocol PokemonsListInteractorInputProtocol: class
 
     func loadInitialData()
     func loadMoreData(with url : String)
-    func save(pokemonId : Int, pokemonName : String)
 }
 
 //MARK: View -

@@ -20,16 +20,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRF-fl-hKB" customClass="RemoteImageView" customModule="Siesta">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fRF-fl-hKB">
                         <rect key="frame" x="8" y="-8.5" width="359" height="200"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="150" id="DLT-F1-cjr"/>
                         </constraints>
-                        <connections>
-                            <outlet property="loadingView" destination="OIn-Zn-mRx" id="jrC-4Y-WAD"/>
-                        </connections>
                     </imageView>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="OIn-Zn-mRx">
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="OIn-Zn-mRx">
                         <rect key="frame" x="162" y="-25" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="OIn-Zn-mRx" secondAttribute="height" multiplier="1:1" id="hRB-ZK-eiG"/>
@@ -48,6 +45,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="activityIndicatorView" destination="OIn-Zn-mRx" id="hgp-PO-t0A"/>
                 <outlet property="pokemonImageView" destination="fRF-fl-hKB" id="ZYx-G0-Igv"/>
             </connections>
             <point key="canvasLocation" x="30.5" y="-289"/>

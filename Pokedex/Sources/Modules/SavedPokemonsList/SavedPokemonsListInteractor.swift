@@ -7,12 +7,17 @@
 
 import RealmSwift
 
-class SavedPokemonsListInteractor: SavedPokemonsListInteractorInputProtocol {
-
+class SavedPokemonsListInteractor: SavedPokemonsListInteractorInputProtocol
+{
     weak var presenter: SavedPokemonsListInteractorOutputProtocol?
 
     func getSavedPokemons() -> Results<Pokemon>
     {
         return DatabaseProvider.shared.queryPokemons()
+    }
+
+    func unsave(_ pokemon: Pokemon)
+    {
+        try? DatabaseProvider.shared.delete(pokemon)
     }
 }

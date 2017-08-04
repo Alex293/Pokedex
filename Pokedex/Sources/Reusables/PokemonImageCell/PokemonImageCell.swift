@@ -8,20 +8,21 @@
 
 import Foundation
 import UIKit
-import Siesta
 
 class PokemonImageCell: UITableViewCell
 {
-    var imageUrl : String?
+    var pokemonImage : UIImage?
     {
         didSet
         {
-            guard pokemonImageView != nil else { return }
-            pokemonImageView.imageURL = imageUrl
+            guard pokemonImageView != nil, let pokemonImage = pokemonImage else { activityIndicatorView.startAnimating() ; return }
+            pokemonImageView.image = pokemonImage
+            activityIndicatorView.stopAnimating()
         }
     }
 
     // MARK: OUTLETS
 
-    @IBOutlet weak var pokemonImageView: RemoteImageView!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var pokemonImageView: UIImageView!
 }

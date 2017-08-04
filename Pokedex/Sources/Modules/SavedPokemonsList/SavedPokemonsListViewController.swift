@@ -28,7 +28,6 @@ class SavedPokemonsListViewController: UIViewController, SavedPokemonsListViewPr
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        tabBarController?.navigationItem.title = "Saved pokemons"
         savedPokemons = presenter?.getSavedPokemons()
         notificationToken = presenter?.getSavedPokemons()?.addNotificationBlock
         {
@@ -54,6 +53,11 @@ class SavedPokemonsListViewController: UIViewController, SavedPokemonsListViewPr
             }
         }
     }
+
+    override func viewDidAppear(_ animated: Bool)
+    {
+        tabBarController?.navigationItem.title = "Saved pokemons"
+    }
 }
 
 extension SavedPokemonsListViewController : UITableViewDataSource
@@ -74,19 +78,22 @@ extension SavedPokemonsListViewController : UITableViewDataSource
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     {
-        if editingStyle == .delete
-        {
-//            realm.beginWrite()
-//            realm.delete(results[indexPath.row])
-//            try! realm.commitWrite()
-        }
+        guard editingStyle == .delete, let pokemon = savedPokemons?[indexPath.row] else { return }
+        presenter?.performUnsave(pokemon)
     }
 
 }
 
 extension SavedPokemonsListViewController : UITableViewDelegate
 {
-
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool
+    {
+        print(indexPath)
+        guard let pokemon = savedPokemons?[indexPath.row] else { return false }
+        print(pokemon)
+        presenter?.didSelect(pokemon)
+        return false
+    }
 }
 
 class Cell: UITableViewCell {

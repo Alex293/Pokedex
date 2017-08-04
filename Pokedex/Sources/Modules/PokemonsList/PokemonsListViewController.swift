@@ -33,11 +33,15 @@ class PokemonsListViewController: UIViewController, PokemonsListViewProtocol
 	override func viewDidLoad()
     {
         super.viewDidLoad()
-        tabBarController?.navigationItem.title = "Pokedex"
         refreshControl.attributedTitle = NSAttributedString(string:"Refresh")
         refreshControl.addTarget(self, action: #selector(PokemonsListViewController.didRequestRefresh), for: UIControlEvents.valueChanged)
         pokemonsTableView.refreshControl = refreshControl
         presenter?.loadInitialData()
+    }
+
+    override func viewDidAppear(_ animated: Bool)
+    {
+        tabBarController?.navigationItem.title = "Pokedex"
     }
 
     func didRequestRefresh()

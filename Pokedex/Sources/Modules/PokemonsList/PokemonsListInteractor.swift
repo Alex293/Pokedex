@@ -46,9 +46,4 @@ class PokemonsListInteractor: PokemonsListInteractorInputProtocol
             self?.presenter?.didFailedToLoadData(error: error, isInitialLoad: false)
         }
     }
-
-    func save(pokemonId : Int, pokemonName : String)
-    {
-        try? DatabaseProvider.shared.savePokemon(withId: pokemonId, name: pokemonName)
-    }
 }

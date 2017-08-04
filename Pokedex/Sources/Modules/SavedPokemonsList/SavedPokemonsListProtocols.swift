@@ -13,13 +13,16 @@ import RealmSwift
 
 //MARK: Wireframe -
 protocol SavedPokemonsListWireframeProtocol: class {
-
+    static func loadModule() -> UIViewController
+    func routeToPokemonDetails(for pokemon : Pokemon)
 }
 //MARK: Presenter -
 protocol SavedPokemonsListPresenterProtocol: class {
 
     var interactor: SavedPokemonsListInteractorInputProtocol? { get set }
     func getSavedPokemons() -> Results<Pokemon>?
+    func performUnsave(_ pokemon : Pokemon)
+    func didSelect(_ pokemon : Pokemon)
 }
 
 //MARK: Interactor -
@@ -32,6 +35,7 @@ protocol SavedPokemonsListInteractorInputProtocol: class {
 
     var presenter: SavedPokemonsListInteractorOutputProtocol?  { get set }
     func getSavedPokemons() -> Results<Pokemon>
+    func unsave(_ pokemon : Pokemon)
     /* Presenter -> Interactor */
 }
 

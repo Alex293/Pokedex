@@ -8,30 +8,40 @@
 
 import UIKit
 
+typealias PokemonLoadingSuccessCallback = (_ pokemon : Pokemon) -> Void
+typealias PokemonLoadingFailureCallback = (_ error : Error) -> Void
+typealias PokemonImageLoadingSuccessCallback = (_ image : UIImage) -> Void
+typealias PokemonImageLoadingFailureCallback = (_ error : Error) -> Void
+typealias GetPokemonImageSuccessCallback = (_ image : UIImage) -> Void
+
+
 //MARK: Wireframe -
 protocol PokemonDetailsWireframeProtocol: class {
-    static func loadModule(pokemonName : String, pokemonUrl : String) -> UIViewController
+    static func loadModule(pokemonName : String, pokemonUrl : String)-> UIViewController
+    static func loadModule(for pokemon : Pokemon)-> UIViewController
 }
 //MARK: Presenter -
 protocol PokemonDetailsPresenterProtocol: class {
 
     var interactor: PokemonDetailsInteractorInputProtocol? { get set }
+    func performSave(_ pokemon : Pokemon)
+    func viewDidLoad()
+    func getImage(for pokemon : Pokemon, successCallBack : GetPokemonImageSuccessCallback?)
 }
 
 //MARK: Interactor -
 protocol PokemonDetailsInteractorOutputProtocol: class {
 
     /* Interactor -> Presenter */
-    func didLoad(pokemon : Pokemon)
 }
 
 protocol PokemonDetailsInteractorInputProtocol: class {
 
     var presenter: PokemonDetailsInteractorOutputProtocol?  { get set }
-
-    func loadPokemonDetails(from url : String)
-    func loadPokemonImage(from url : String, successCallBack : @escaping (_ image : UIImage) -> Void)
-    //func loadPokemonDetails(from id : Int)
+    func loadPokemon(from url : String, successCallBack : PokemonLoadingSuccessCallback?, failureCallback : PokemonLoadingFailureCallback?)
+    func loadLocalImage(for pokemon : Pokemon) -> UIImage?
+    func loadDistantImage(for pokemon : Pokemon, successCallBack : PokemonImageLoadingSuccessCallback?, failureCallback : PokemonImageLoadingFailureCallback?)
+    func save(_ pokemon : Pokemon)
 
     /* Presenter -> Interactor */
 }
@@ -40,7 +50,8 @@ protocol PokemonDetailsInteractorInputProtocol: class {
 protocol PokemonDetailsViewProtocol: class {
 
     var presenter: PokemonDetailsPresenterProtocol?  { get set }
-    func update(pokemon : Pokemon)
+    func update(_ pokemon : Pokemon)
+    func show(_ message : String, isError : Bool)
 
     /* Presenter -> ViewController */
 }
