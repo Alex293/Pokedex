@@ -11,11 +11,14 @@ import UIKit
 
 class PokemonTypeCell: UITableViewCell
 {
+    // MARK: VARS
+
     var typeName : String?
     {
         didSet
         {
-            typeNameLabel.text = "\(typeName ?? "Unknown pokemon")"
+            guard let name = typeName else { return }
+            typeNameLabel.text = name
         }
     }
 

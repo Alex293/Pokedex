@@ -11,21 +11,18 @@ import UIKit
 
 class PokemonCell: UITableViewCell
 {
-    var pokemonName : String?
+    // MARK: VARS
+
+    var pokemon : Pokemon?
     {
         didSet
         {
-            nameLabel.text = "\(pokemonName ?? "Unknown pokemon")"
+            guard let name = pokemon?.name else { return }
+            nameLabel.text = name
         }
     }
-    var pokemonUrl : String?
 
     // MARK: OUTLETS
 
     @IBOutlet weak var nameLabel: UILabel!
-
-    @IBAction func didTouchSavePokemonButton(_ sender: UIButton)
-    {
-        
-    }
 }

@@ -15,7 +15,6 @@ class PokemonDetailsPresenter: PokemonDetailsPresenterProtocol, PokemonDetailsIn
     private let router: PokemonDetailsWireframeProtocol
 
     var wasLoadedWithPokemon : Bool = false
-
     var pokemonUrl : String?
     var pokemon : Pokemon?
     
@@ -45,15 +44,44 @@ class PokemonDetailsPresenter: PokemonDetailsPresenterProtocol, PokemonDetailsIn
         }
     }
 
-    func performSave(_ pokemon : Pokemon)
+    func isSaved(_ pokemon: Pokemon) -> Bool
     {
-        interactor?.save(pokemon)
+        return interactor?.isSaved(pokemon) ?? false
     }
 
-    /*func performLoadPokemonImage(from url : String, successCallBack : PokemonImageLoadingSuccessCallback?)
+    func performSave(_ pokemon : Pokemon)
     {
-        interactor?.loadPokemonImage(from: url, successCallBack: successCallBack, failureCallback: { self.handle($0) })
-    }*/
+        do
+        {
+            try interactor?.save(pokemon, successCallBack:
+            {
+                self.view?.update(isPokemonSaved: true)
+                self.view?.show(Constant.Text.Message.pokemonSavedSuccess, isError: false)
+            })
+        }
+        catch let error
+        {
+            view?.show(Constant.Text.Message.pokemonSavedFailure, isError: true)
+            print(error)
+        }
+    }
+
+    func performUnsave(_ pokemon : Pokemon)
+    {
+        do
+        {
+            try interactor?.unsave(pokemon, successCallBack:
+            {
+                self.view?.update(isPokemonSaved: false)
+                self.view?.show(Constant.Text.Message.pokemonUnsavedSuccess, isError: false)
+            })
+        }
+        catch let error
+        {
+            view?.show(Constant.Text.Message.pokemonUnsavedFailure, isError: true)
+            print(error)
+        }
+    }
 
     func handle(_ error : Error)
     {
@@ -71,6 +99,14 @@ class PokemonDetailsPresenter: PokemonDetailsPresenterProtocol, PokemonDetailsIn
             interactor?.loadDistantImage(for: pokemon, successCallBack:
             {
                 (image) in
+                do
+                {
+                    try FileManager.shared.setLocalImage(for: pokemon, image, successCallback: nil)
+                }
+                catch let error
+                {
+                    self.view?.show(error.localizedDescription, isError: true)
+                }
                 successCallBack?(image)
             },
             failureCallback:

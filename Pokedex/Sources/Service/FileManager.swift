@@ -13,8 +13,6 @@ typealias SetLocalImageSuccessCallback = () -> ()
 
 final class FileManager
 {
-    private static let baseURI = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-
     // Can't init this is a singleton
     private init() {}
 
@@ -25,13 +23,20 @@ final class FileManager
     func getLocalImage(for pokemon : Pokemon) -> UIImage?
     {
         guard  let name = pokemon.name else { return nil }
-        return UIImage(contentsOfFile: FileManager.baseURI.appendingPathComponent(name))
+        return UIImage(contentsOfFile: Constant.Path.pokemonImages.appendingPathComponent(name))
     }
 
     func setLocalImage(for pokemon : Pokemon, _ image : UIImage, successCallback : SetLocalImageSuccessCallback?) throws
     {
         guard  let name = pokemon.name, let data = UIImagePNGRepresentation(image) else { return }
-        try data.write(to: URL(fileReferenceLiteralResourceName: FileManager.baseURI.appendingPathComponent(name)))
+        try data.write(to: URL(fileURLWithPath: Constant.Path.pokemonImages).appendingPathComponent(name))
         successCallback?()
     }
+
+//    func getDocumentsDirectory() -> URL {
+//        NSUrlFordi
+//        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+//        let documentsDirectory = paths[0]
+//        return documentsDirectory
+//    }
 }

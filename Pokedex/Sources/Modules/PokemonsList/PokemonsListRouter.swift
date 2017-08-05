@@ -4,17 +4,16 @@
 //
 //  Created Alexis Schultz on 03/08/2017.
 //  Copyright © 2017 Alexis Schultz. All rights reserved.
+//
 
 import UIKit
 
 class PokemonsListRouter: PokemonsListWireframeProtocol
 {
-
     weak var viewController: UIViewController?
 
     static func loadModule() -> UIViewController
     {
-        // Change to get view from storyboard if not using progammatic UI
         let view = PokemonsListViewController(nibName: nil, bundle: nil)
         let interactor = PokemonsListInteractor()
         let router = PokemonsListRouter()
@@ -24,14 +23,19 @@ class PokemonsListRouter: PokemonsListWireframeProtocol
         interactor.presenter = presenter
         router.viewController = view
 
-        let pokemonListTabBarItem = UITabBarItem(title: "All pokemons", image: UIImage(named: "pokemonLight"), selectedImage: UIImage(named: "pokemonBold"))
+        let pokemonListTabBarItem = UITabBarItem(title: Constant.Text.Title.allPokemons, image: UIImage(named: Constant.ImageName.pokemonLight), selectedImage: UIImage(named: Constant.ImageName.pokemonBold))
         view.tabBarItem = pokemonListTabBarItem
 
         return view
     }
 
-    func routeToPokemonDetails(name : String, url : String)
+    func routeToPokemonDetails(for pokemonNameAndUrl : PokemonNameAndUrl)
     {
-        viewController?.navigationController?.pushViewController(PokemonDetailsRouter.loadModule(pokemonName: name, pokemonUrl: url), animated: true)
+        viewController?.navigationController?.pushViewController(PokemonDetailsRouter.loadModule(for: pokemonNameAndUrl), animated: true)
+    }
+
+    func routeToPokemonDetails(for pokemon : Pokemon)
+    {
+        viewController?.navigationController?.pushViewController(PokemonDetailsRouter.loadModule(for: pokemon), animated: true)
     }
 }

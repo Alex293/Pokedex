@@ -11,18 +11,22 @@ import UIKit
 
 class PokemonStatCell: UITableViewCell
 {
+    // MARK: VARS
+
     var statName : String?
     {
         didSet
         {
-            statNameLabel.text = "\(statName ?? "Unknown pokemon")"
+            guard let name = statName else { return }
+            statNameLabel.text = name
         }
     }
     var statBaseValue : Int?
     {
         didSet
         {
-            statBaseValueLabel.text = statBaseValue != nil ? "\(statBaseValue!)" : "Unknown value"
+            guard let value = statBaseValue else { return }
+            statBaseValueLabel.text = "\(value)"
         }
     }
 

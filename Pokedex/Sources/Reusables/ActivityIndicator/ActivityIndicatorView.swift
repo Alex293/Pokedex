@@ -16,6 +16,8 @@ protocol ActivityIndicatorDelegate
 
 class ActivityIndicatorView : UIActivityIndicatorView
 {
+    // MARK: VARS
+
     var delegate : ActivityIndicatorDelegate?
 
     override func startAnimating()

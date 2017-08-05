@@ -4,6 +4,7 @@
 //
 //  Created Alexis Schultz on 03/08/2017.
 //  Copyright © 2017 Alexis Schultz. All rights reserved.
+//
 
 import UIKit
 import Siesta
@@ -21,8 +22,8 @@ class PokemonsListInteractor: PokemonsListInteractorInputProtocol
             switch event
             {
             case .newData(_) :
-                let result : (pokemons : [(String, String)], loadMoreDataUrl : String?) = resource.typedContent(ifNone: (pokemons : [], loadMoreDataUrl : nil))
-                self?.presenter?.didLoadData(pokemons: result.pokemons, loadMoreDataUrl: result.loadMoreDataUrl, isInitialLoad: true)
+                let result : (pokemons : [PokemonNameAndUrl], loadMoreDataUrl : String?) = resource.typedContent(ifNone: (pokemons : [], loadMoreDataUrl : nil))
+                self?.presenter?.didLoadData(pokemonsNameAndUrl: result.pokemons, loadMoreDataUrl: result.loadMoreDataUrl, isInitialLoad: true)
             case .error :
                 guard let error = resource.latestError else { return }
                 self?.presenter?.didFailedToLoadData(error: error, isInitialLoad: true)
@@ -37,13 +38,18 @@ class PokemonsListInteractor: PokemonsListInteractorInputProtocol
         .onSuccess(
         {
             [weak self] (entity) in
-            let result : (pokemons : [(String, String)], loadMoreDataUrl : String?) = entity.typedContent(ifNone: (pokemons : [], loadMoreDataUrl : nil))
-            self?.presenter?.didLoadData(pokemons: result.pokemons, loadMoreDataUrl: result.loadMoreDataUrl, isInitialLoad: false)
+            let result : (pokemons : [PokemonNameAndUrl], loadMoreDataUrl : String?) = entity.typedContent(ifNone: (pokemons : [], loadMoreDataUrl : nil))
+            self?.presenter?.didLoadData(pokemonsNameAndUrl: result.pokemons, loadMoreDataUrl: result.loadMoreDataUrl, isInitialLoad: false)
         })
         .onFailure
         {
             [weak self] (error) in
             self?.presenter?.didFailedToLoadData(error: error, isInitialLoad: false)
         }
+    }
+
+    func isPokemonSaved(for name : String) -> Pokemon?
+    {
+        return DatabaseProvider.shared.getPokemon(with: name)
     }
 }

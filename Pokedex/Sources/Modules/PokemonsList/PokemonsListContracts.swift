@@ -6,18 +6,18 @@
 //  Copyright © 2017 Alexis Schultz. All rights reserved.
 //
 
-import Foundation
 import UIKit
 import Siesta
 
-//MARK: Wireframe -
+//MARK: Wireframe - External interaction
 protocol PokemonsListWireframeProtocol: class
 {
     static func loadModule() -> UIViewController
-    func routeToPokemonDetails(name : String, url : String)
+    func routeToPokemonDetails(for pokemonNameAndUrl : PokemonNameAndUrl)
+    func routeToPokemonDetails(for pokemon : Pokemon)
 }
 
-//MARK: Presenter -
+//MARK: Presenter - View -> Presenter
 protocol PokemonsListPresenterProtocol: class
 {
     var interactor: PokemonsListInteractorInputProtocol? { get set }
@@ -25,31 +25,33 @@ protocol PokemonsListPresenterProtocol: class
     func shouldShowLoadMoreCell() -> Bool
     func loadInitialData()
     func loadMoreData()
-    func didSelectPokemon(name : String, url : String)
+    func didSelect(_ pokemonNameAndUrl : PokemonNameAndUrl)
+    func didSelect(_ pokemon : Pokemon)
+    func isPokemonSaved(for name : String) -> Pokemon?
 }
 
-//MARK: Interactor -
-/* Interactor -> Presenter */
+//MARK: InteractorOutput - Interactor -> Presenter
 protocol PokemonsListInteractorOutputProtocol: class
 {
-    func didLoadData(pokemons: [(String, String)], loadMoreDataUrl : String?, isInitialLoad : Bool)
+    func didLoadData(pokemonsNameAndUrl: [PokemonNameAndUrl], loadMoreDataUrl : String?, isInitialLoad : Bool)
     func didFailedToLoadData(error : RequestError, isInitialLoad : Bool)
 }
 
-/* Presenter -> Interactor */
+//MARK: InteractorOutput - Presenter -> Interactor
 protocol PokemonsListInteractorInputProtocol: class
 {
     var presenter: PokemonsListInteractorOutputProtocol?  { get set }
 
     func loadInitialData()
     func loadMoreData(with url : String)
+    func isPokemonSaved(for name : String) -> Pokemon?
 }
 
-//MARK: View -
-/* Presenter -> ViewController */
+//MARK: View - Presenter -> ViewController
 protocol PokemonsListViewProtocol: class
 {
     var presenter: PokemonsListPresenterProtocol?  { get set }
-    func reloadData(pokemons : [(String, String)], isInitialLoad : Bool)
+    
+    func reloadData(pokemonsNameAndUrl : [PokemonNameAndUrl], isInitialLoad : Bool)
     func didFailedToLoadData(errorMessage : String, isInitialLoad : Bool)
 }

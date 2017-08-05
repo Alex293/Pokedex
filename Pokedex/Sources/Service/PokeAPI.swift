@@ -10,8 +10,6 @@ import Foundation
 import SwiftyJSON
 import Siesta
 
-typealias PokemonDetails = (id : Int, name : String, imageUrl : String, stats : [PokemonStat],  types: [PokemonType])
-
 class PokeAPI
 {
     private let service = Service(baseURL: "http://pokeapi.co/api/v2/")
@@ -47,7 +45,7 @@ class PokeAPI
 
         service.configureTransformer("/pokemon") { self.pokemonNameAndUrlTransformer(json: $0.content as JSON) }
         service.configureTransformer("/pokemon/*") { self.pokemonNameAndUrlTransformer(json: $0.content as JSON) }
-        service.configureTransformer(PokemonIntPattern()) { self.pokemonTransformer(json: $0.content as JSON) }
+        service.configureTransformer(PokemonIntPattern()) { Pokemon(json: $0.content as JSON) }
     }
 
     func pokemon(id: Int) -> Resource
@@ -76,31 +74,9 @@ class PokeAPI
         }
     }
 
-    func pokemonNameAndUrlTransformer(json : JSON) -> ([(String, String)], String?)
+    func pokemonNameAndUrlTransformer(json : JSON) -> ([PokemonNameAndUrl], String?)
     {
-        return (json["results"].arrayValue.flatMap( { jsonToPokemonNameAndUrl(json: $0) } ), (json["next"] as JSON?)?.string)
-    }
-
-    func jsonToPokemonNameAndUrl(json : JSON) -> (name : String, url : String)?
-    {
-        guard let name = json["name"].string, let url = json["url"].string else { return nil }
-        return (name, url)
-    }
-
-    func jsonToPokemonStats(json : JSON) -> [PokemonStat]
-    {
-        return json.arrayValue.flatMap( { PokemonStat(json: $0) } )
-    }
-
-    func jsonToPokemonTypes(json : JSON) -> [PokemonType]
-    {
-        return json.arrayValue.flatMap( { PokemonType(json: $0) } )
-    }
-
-    func pokemonTransformer(json : JSON) -> PokemonDetails?
-    {
-        guard let id = json["id"].int, let name = json["name"].string, let imageUrl = json["sprites"]["front_default"].string else { return nil }
-        return (id : id, name: name, imageUrl: imageUrl, stats : jsonToPokemonStats(json: json["stats"] as JSON), types: jsonToPokemonTypes(json: json["types"] as JSON))
+        return (json["results"].arrayValue.flatMap( { PokemonNameAndUrl(json: $0) } ), (json["next"] as JSON?)?.string)
     }
 }
 

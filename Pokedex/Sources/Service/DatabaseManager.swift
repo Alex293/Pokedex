@@ -10,8 +10,8 @@ import RealmSwift
 
 final class DatabaseProvider
 {
-    private static let shouldDeleteRealm = false
-    private let realm = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true))
+    private static let shouldDeleteRealm = false                                                                // Clean db at startup
+    private let realm = try! Realm(configuration: Realm.Configuration(deleteRealmIfMigrationNeeded: true))      // Avoid migration
 
     // Can't init this is a singleton
     private init()
@@ -35,9 +35,17 @@ final class DatabaseProvider
 
     static let shared: DatabaseProvider = DatabaseProvider()
 
-    func queryPokemons() -> Results<Pokemon>
+    func queryPokemons(filterByPokemonNameOrTypeName filter : String?) -> Results<Pokemon>
     {
-        return realm.objects(Pokemon.self).sorted(byKeyPath: "id", ascending : true)
+        if let filter = filter
+        {
+            let predicate = NSPredicate(format: "name CONTAINS %@ OR ANY types.name CONTAINS %@", filter, filter)
+            return realm.objects(Pokemon.self).sorted(byKeyPath: "id", ascending : true).filter(predicate)
+        }
+        else
+        {
+            return realm.objects(Pokemon.self).sorted(byKeyPath: "id", ascending : true)
+        }
     }
 
     @discardableResult
@@ -56,5 +64,10 @@ final class DatabaseProvider
         {
             realm.delete(pokemon)
         }
+    }
+
+    func getPokemon(with name : String) -> Pokemon?
+    {
+        return realm.object(ofType: Pokemon.self, forPrimaryKey: name)
     }
 }

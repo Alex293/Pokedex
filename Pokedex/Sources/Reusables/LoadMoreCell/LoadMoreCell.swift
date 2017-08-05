@@ -43,6 +43,7 @@ class LoadMoreCell : UITableViewCell
     // MARK: HELPERS
 }
 
+// MARK: ActivityIndicatorDelegate
 extension LoadMoreCell : ActivityIndicatorDelegate
 {
     func didStartAnimating()

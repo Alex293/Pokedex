@@ -4,6 +4,7 @@
 //
 //  Created Alexis Schultz on 03/08/2017.
 //  Copyright © 2017 Alexis Schultz. All rights reserved.
+//
 
 import UIKit
 import Siesta
@@ -40,11 +41,10 @@ class PokemonsListPresenter: PokemonsListPresenterProtocol, PokemonsListInteract
         interactor?.loadInitialData()
     }
 
-    func didLoadData(pokemons: [(String, String)], loadMoreDataUrl : String?, isInitialLoad : Bool)
-    {
+    func didLoadData(pokemonsNameAndUrl: [PokemonNameAndUrl], loadMoreDataUrl: String?, isInitialLoad: Bool) {
         self.loadMoreDataUrl = loadMoreDataUrl
         isLoadingMoreData = false
-        view?.reloadData(pokemons: pokemons, isInitialLoad: isInitialLoad)
+        view?.reloadData(pokemonsNameAndUrl: pokemonsNameAndUrl, isInitialLoad: isInitialLoad)
     }
 
     func didFailedToLoadData(error: RequestError, isInitialLoad: Bool)
@@ -56,50 +56,18 @@ class PokemonsListPresenter: PokemonsListPresenterProtocol, PokemonsListInteract
         view?.didFailedToLoadData(errorMessage: error.userMessage, isInitialLoad: isInitialLoad)
     }
 
-    func didSelectPokemon(name : String, url : String)
+    func didSelect(_ pokemonNameAndUrl : PokemonNameAndUrl)
     {
-        router.routeToPokemonDetails(name: name, url: url)
+        router.routeToPokemonDetails(for : pokemonNameAndUrl)
+    }
+
+    func didSelect(_ pokemon: Pokemon)
+    {
+        router.routeToPokemonDetails(for : pokemon)
+    }
+
+    func isPokemonSaved(for name : String) -> Pokemon?
+    {
+        return interactor?.isPokemonSaved(for: name)
     }
 }
-
-/*
-
--
-
- func loadNext()
- {
- guard let nextResultsUrl = nextResultsUrl else
- {
- fatalError("EventTagsController : Can't load more result without a next link")
- }
- guard !isLoadingNextResults else
- {
- return
- }
- self.isLoadingNextResults = true
- pokeAPI.resource(for: nextResultsUrl).request(.get)
- .onSuccess(
- {
- [weak self] (entity) in
- let result : (pokemons : [Pokemon], nextResultsUrl : JSON?) = entity.typedContent(ifNone: (pokemons : [], nextResultsUrl : nil))
- self?.nextResultsUrl = result.nextResultsUrl?.string
- self?.pokemons.append(contentsOf: result.pokemons)
- self?.isLoadingNextResults = false
- })
- .onFailure
- {
- [weak self] (error) in
- self?.isLoadingNextResults = false
- print("Error while loading more")
- //Utils.showWhisper(title: "\(error.userMessage)", type: .error)
- if let cell = self?.pokemonsTableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? LoadMoreCell
- {
- cell.activityIndicatorView.stopAnimating()
- }
- }
- }
-
- }
-
-
- */

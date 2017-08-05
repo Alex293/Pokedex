@@ -17,27 +17,15 @@ class Pokemon: Object
     dynamic var id : Int = 0
     dynamic var imageUrl : String?
     dynamic var name : String?
+    dynamic var weight : Int = 0
+    dynamic var height : Int = 0
     
     let types = List<PokemonType>()
     let stats = List<PokemonStat>()
 
-    var image : UIImage?
-    {
-        get
-        {
-            guard  let name = name else { return nil }
-            return UIImage(contentsOfFile: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appendingPathComponent(name))
-        }
-        set
-        {
-            guard  let name = name, let image = image, let data = UIImagePNGRepresentation(image) else { return }
-            try? data.write(to: URL(fileReferenceLiteralResourceName: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].appendingPathComponent(name)))
-        }
-    }
-
     override static func primaryKey() -> String?
     {
-        return "id"
+        return "name"
     }
 
     override static func ignoredProperties() -> [String]
@@ -45,25 +33,18 @@ class Pokemon: Object
         return ["image"]
     }
 
-    convenience init(json : JSON)
+    convenience init?(json : JSON)
     {
+        guard let id = json["id"].int, let name = json["name"].string, let weight = json["weight"].int, let height = json["height"].int, let imageUrl = json["sprites"]["front_default"].string else { return nil }
         self.init()
-        //print("init pokemon from json : \(json)")
-        id = json["id"].int ?? 0
-        name = json["name"].string
-        //url = json["url"].string
-        
-    }
-
-    convenience init(details : PokemonDetails)
-    {
-        self.init()
-        id = details.id
-        imageUrl = details.imageUrl
-        name = details.name
-        types.removeAll()
-        types.append(objectsIn: details.types)
-        stats.removeAll()
-        stats.append(objectsIn :details.stats)
+        self.id = id
+        self.name = name
+        self.weight = weight
+        self.height = height
+        self.imageUrl = imageUrl
+        self.types.removeAll()
+        self.types.append(objectsIn: json["types"].arrayValue.flatMap( { PokemonType(json: $0 as JSON) } ))
+        self.stats.removeAll()
+        self.stats.append(objectsIn :json["stats"].arrayValue.flatMap( { PokemonStat(json: $0 as JSON) }))
     }
 }

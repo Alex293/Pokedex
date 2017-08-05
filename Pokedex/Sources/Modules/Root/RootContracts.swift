@@ -8,7 +8,7 @@
 
 import UIKit
 
-//MARK: Wireframe -
+//MARK: Wireframe - External interaction
 protocol RootWireframeProtocol: class
 {
     static func loadModule(in window : UIWindow)

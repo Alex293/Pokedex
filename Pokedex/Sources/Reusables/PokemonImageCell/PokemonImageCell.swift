@@ -11,6 +11,8 @@ import UIKit
 
 class PokemonImageCell: UITableViewCell
 {
+    // MARK: VARS
+
     var pokemonImage : UIImage?
     {
         didSet

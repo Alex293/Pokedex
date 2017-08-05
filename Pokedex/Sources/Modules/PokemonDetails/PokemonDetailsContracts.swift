@@ -13,45 +13,59 @@ typealias PokemonLoadingFailureCallback = (_ error : Error) -> Void
 typealias PokemonImageLoadingSuccessCallback = (_ image : UIImage) -> Void
 typealias PokemonImageLoadingFailureCallback = (_ error : Error) -> Void
 typealias GetPokemonImageSuccessCallback = (_ image : UIImage) -> Void
+typealias SavePokemonSuccessCallback = () -> ()
+typealias UnsavePokemonSuccessCallback = () -> ()
 
+enum PokemonDetailsError : Error
+{
+    case noUrl
+    case noContent
+}
 
-//MARK: Wireframe -
-protocol PokemonDetailsWireframeProtocol: class {
-    static func loadModule(pokemonName : String, pokemonUrl : String)-> UIViewController
+//MARK: Wireframe - External interaction
+protocol PokemonDetailsWireframeProtocol: class
+{
+    static func loadModule(for pokemonNameAndUrl : PokemonNameAndUrl)-> UIViewController
     static func loadModule(for pokemon : Pokemon)-> UIViewController
 }
-//MARK: Presenter -
-protocol PokemonDetailsPresenterProtocol: class {
 
+//MARK: Presenter - View -> Presenter
+protocol PokemonDetailsPresenterProtocol: class
+{
     var interactor: PokemonDetailsInteractorInputProtocol? { get set }
-    func performSave(_ pokemon : Pokemon)
+    
     func viewDidLoad()
+    func isSaved(_ pokemon : Pokemon) -> Bool
+    func performSave(_ pokemon : Pokemon)
+    func performUnsave(_ pokemon : Pokemon)
     func getImage(for pokemon : Pokemon, successCallBack : GetPokemonImageSuccessCallback?)
 }
 
-//MARK: Interactor -
-protocol PokemonDetailsInteractorOutputProtocol: class {
+//MARK: InteractorOutput - Interactor -> Presenter
+protocol PokemonDetailsInteractorOutputProtocol: class
+{
 
-    /* Interactor -> Presenter */
 }
 
-protocol PokemonDetailsInteractorInputProtocol: class {
-
+//MARK: InteractorOutput - Presenter -> Interactor
+protocol PokemonDetailsInteractorInputProtocol: class
+{
     var presenter: PokemonDetailsInteractorOutputProtocol?  { get set }
+
     func loadPokemon(from url : String, successCallBack : PokemonLoadingSuccessCallback?, failureCallback : PokemonLoadingFailureCallback?)
     func loadLocalImage(for pokemon : Pokemon) -> UIImage?
     func loadDistantImage(for pokemon : Pokemon, successCallBack : PokemonImageLoadingSuccessCallback?, failureCallback : PokemonImageLoadingFailureCallback?)
-    func save(_ pokemon : Pokemon)
-
-    /* Presenter -> Interactor */
+    func save(_ pokemon: Pokemon, successCallBack : SavePokemonSuccessCallback?) throws
+    func unsave(_ pokemon: Pokemon, successCallBack : UnsavePokemonSuccessCallback?) throws
+    func isSaved(_ pokemon : Pokemon) -> Bool
 }
 
-//MARK: View -
-protocol PokemonDetailsViewProtocol: class {
-
+//MARK: View - Presenter -> ViewController
+protocol PokemonDetailsViewProtocol: class
+{
     var presenter: PokemonDetailsPresenterProtocol?  { get set }
+
     func update(_ pokemon : Pokemon)
     func show(_ message : String, isError : Bool)
-
-    /* Presenter -> ViewController */
+    func update(isPokemonSaved : Bool)
 }
